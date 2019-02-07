@@ -34,7 +34,10 @@ namespace Server
                 }
                 try
                 {
-                    while(true)
+                    message = $"{UserName}: join to chat";
+                    server.BroadcastMessages(message, this.Id);
+                    //Console.WriteLine(message);
+                    while (true)
                     {
                         NetworkStream = tcpClient.GetStream();
                         message = $"{UserName}: {GetMessage()}";
@@ -44,13 +47,14 @@ namespace Server
                 }
                 catch(Exception e)
                 {
+                    Console.WriteLine($"{UserName} leave chat");
                     Console.WriteLine(e.Message);
                 }
             }            
             finally
             {
+                Console.WriteLine($"{UserName} conection closed");
                 server.CloseConection(Id);
-                Close();
             }
         }
         string GetMessage()

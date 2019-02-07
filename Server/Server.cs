@@ -42,6 +42,11 @@ namespace Server
         protected internal void CloseConection(string id)
         {
             Client client = clients.FirstOrDefault(c => c.Id == id);
+            if(client != null)
+            {
+                client.Close();
+                clients.Remove(client);
+            }
         }
 
         protected internal void BroadcastMessages(string message, string id)
