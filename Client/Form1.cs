@@ -59,11 +59,7 @@ namespace Client
 
                     receiveThread = new Thread(ReceiveMessages);
                     receiveThread.IsBackground = true;
-                    receiveThread.Start();
-
-                    string message = userName + " join to chat" + Environment.NewLine;
-                    rtb_MsgBox.Text += message + Environment.NewLine;
-                    sendMessage(message);
+                    receiveThread.Start();                    
                 }
                 catch (Exception ex)
                 {
@@ -88,7 +84,7 @@ namespace Client
         {
             try
             {
-                byte[] data = Encoding.Unicode.GetBytes(message + Environment.NewLine);
+                byte[] data = Encoding.Unicode.GetBytes(message);
                 networkStream.Write(data, 0, data.Length);
             }
             catch(Exception e)

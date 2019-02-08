@@ -36,7 +36,7 @@ namespace Server
                 {
                     message = $"{UserName}: join to chat";
                     server.BroadcastMessages(message, this.Id);
-                    //Console.WriteLine(message);
+                    Console.WriteLine(message);
                     while (true)
                     {
                         NetworkStream = tcpClient.GetStream();
