@@ -34,6 +34,7 @@
             this.btn_JoinChat = new System.Windows.Forms.Button();
             this.btn_SendMsg = new System.Windows.Forms.Button();
             this.tb_sendMsg = new System.Windows.Forms.TextBox();
+            this.btn_disconect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // rtb_MsgBox
@@ -87,11 +88,22 @@
             this.tb_sendMsg.Size = new System.Drawing.Size(695, 20);
             this.tb_sendMsg.TabIndex = 5;
             // 
+            // btn_disconect
+            // 
+            this.btn_disconect.Location = new System.Drawing.Point(230, 30);
+            this.btn_disconect.Name = "btn_disconect";
+            this.btn_disconect.Size = new System.Drawing.Size(75, 23);
+            this.btn_disconect.TabIndex = 6;
+            this.btn_disconect.Text = "Disconect";
+            this.btn_disconect.UseVisualStyleBackColor = true;
+            this.btn_disconect.Click += new System.EventHandler(this.btn_disconect_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_disconect);
             this.Controls.Add(this.tb_sendMsg);
             this.Controls.Add(this.btn_SendMsg);
             this.Controls.Add(this.btn_JoinChat);
@@ -114,6 +126,7 @@
         private System.Windows.Forms.Button btn_JoinChat;
         private System.Windows.Forms.Button btn_SendMsg;
         private System.Windows.Forms.TextBox tb_sendMsg;
+        private System.Windows.Forms.Button btn_disconect;
     }
 }
 

@@ -62,12 +62,20 @@ namespace Server
             byte[] messageData = new byte[64];
             int bytes = 0;
             StringBuilder sb = new StringBuilder();
-            do
+            try
             {
-                bytes = NetworkStream.Read(messageData, 0, messageData.Length);
-                sb.Append(Encoding.Unicode.GetString(messageData, 0, bytes));
+                do
+                {
+                    bytes = NetworkStream.Read(messageData, 0, messageData.Length);
+                    sb.Append(Encoding.Unicode.GetString(messageData, 0, bytes));
+                }
+                while (NetworkStream.DataAvailable);
             }
-            while (NetworkStream.DataAvailable);
+            catch
+            {
+                throw new Exception();
+            }
+            
             return sb.ToString();
         }
         bool GetUserName()
@@ -83,14 +91,14 @@ namespace Server
 
         protected internal void Close()
         {
-            if( tcpClient != null)
-            {
-                tcpClient.Close();
-            }
-            if( NetworkStream != null)
+            if (NetworkStream != null)
             {
                 NetworkStream.Close();
             }
+            if ( tcpClient != null)
+            {
+                tcpClient.Close();
+            }            
         }
     }
 }

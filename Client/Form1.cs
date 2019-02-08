@@ -20,8 +20,8 @@ namespace Client
         static string userName;
         static string nameTag = "#UN#";
         Thread receiveThread;
-        static TcpClient client;
-        static NetworkStream networkStream;
+        TcpClient client;
+        NetworkStream networkStream;
         public Form1()
         {
             InitializeComponent();
@@ -30,13 +30,6 @@ namespace Client
 
         private void formClosing(object sender, FormClosingEventArgs e)
         {
-            //Monitor.Enter(networkStream);
-            //receiveThread.Suspend();
-            //Disconect();
-            //stopReciving = true;
-            //receiveThread.Resume();
-            //Disconect();
-            //Monitor.Exit(networkStream);
             Dispose();
         }
 
@@ -59,7 +52,7 @@ namespace Client
 
                     receiveThread = new Thread(ReceiveMessages);
                     receiveThread.IsBackground = true;
-                    receiveThread.Start();                    
+                    receiveThread.Start();
                 }
                 catch (Exception ex)
                 {
@@ -138,14 +131,21 @@ namespace Client
         {
             if(networkStream != null)
             {
+                client.Dispose();
+                client.GetStream().Close();
                 networkStream.Close();
+                networkStream = null;
             }
             if(client != null)
             {
                 client.Close();
+                client = null;
             }
         }
 
-       
+        private void btn_disconect_Click(object sender, EventArgs e)
+        {
+            Disconect();
+        }
     }
 }
