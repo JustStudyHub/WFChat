@@ -123,6 +123,12 @@ namespace Client
                 }
                 finally
                 {
+                    Action action2 = () =>
+                    {
+                        btn_JoinChat.Enabled = true;
+                    };
+                    Invoke(action2);
+                    Thread.CurrentThread.Abort();
                 }
             }
             Disconect();
