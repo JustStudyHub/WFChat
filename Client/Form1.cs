@@ -103,24 +103,23 @@ namespace Client
 
                     string message = builder.ToString();
 
-                    Action action = () =>
+                    Action action0 = () =>
                     {
                         rtb_MsgBox.Text += message + Environment.NewLine;
                     };
-                    Invoke(action);
+                    Invoke(action0);
                 }
                 catch (Exception e)
-                {
-                    MessageBox.Show("Can't receive message " + e.Message);
-                    Disconect();
-                }
-                finally
-                {
-                    Action action2 = () =>
+                {                    
+                    Action action1 = () =>
                     {
+                        rtb_MsgBox.Text += "You are disconnected from the server" + Environment.NewLine;
+                        rtb_MsgBox.Text += e.Message + Environment.NewLine;
+
                         btn_JoinChat.Enabled = true;
                     };
-                    Invoke(action2);
+                    Invoke(action1);
+                    Disconect();
                     Thread.CurrentThread.Abort();
                 }
             }
@@ -131,21 +130,19 @@ namespace Client
         {
             if(networkStream != null)
             {
-                client.Dispose();
-                client.GetStream().Close();
                 networkStream.Close();
-                networkStream = null;
             }
             if(client != null)
             {
                 client.Close();
-                client = null;
             }
         }
 
         private void btn_disconect_Click(object sender, EventArgs e)
         {
+            sendMessage("disconnected from the chat");
             Disconect();
+            btn_JoinChat.Enabled = true;
         }
     }
 }

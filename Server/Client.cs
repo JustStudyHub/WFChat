@@ -41,7 +41,10 @@ namespace Server
                     {
                         NetworkStream = tcpClient.GetStream();
                         message = $"{UserName}: {GetMessage()}";
-                        server.BroadcastMessages(message, this.Id);
+                        if (message != $"{UserName}: ")
+                        {
+                            server.BroadcastMessages(message, this.Id);
+                        }
                         Console.WriteLine(message);
                     }
                 }
@@ -70,10 +73,15 @@ namespace Server
                     sb.Append(Encoding.Unicode.GetString(messageData, 0, bytes));
                 }
                 while (NetworkStream.DataAvailable);
+                if(bytes<=0)
+                {
+                    throw new SocketException();
+                }
             }
             catch
             {
-                throw new Exception();
+                Console.WriteLine($"{UserName} conection closed");
+                server.CloseConection(Id);
             }
             
             return sb.ToString();
