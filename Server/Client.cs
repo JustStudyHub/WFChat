@@ -34,23 +34,30 @@ namespace Server
                 }
                 try
                 {
-                    while(true)
+                    message = $"{UserName}: join to chat";
+                    server.BroadcastMessages(message, this.Id);
+                    Console.WriteLine(message);
+                    while (true)
                     {
                         NetworkStream = tcpClient.GetStream();
                         message = $"{UserName}: {GetMessage()}";
-                        server.BroadcastMessages(message, this.Id);
+                        if (message != $"{UserName}: ")
+                        {
+                            server.BroadcastMessages(message, this.Id);
+                        }
                         Console.WriteLine(message);
                     }
                 }
                 catch(Exception e)
                 {
+                    Console.WriteLine($"{UserName} leave chat");
                     Console.WriteLine(e.Message);
                 }
             }            
             finally
             {
+                Console.WriteLine($"{UserName} conection closed");
                 server.CloseConection(Id);
-                Close();
             }
         }
         string GetMessage()
@@ -58,12 +65,25 @@ namespace Server
             byte[] messageData = new byte[64];
             int bytes = 0;
             StringBuilder sb = new StringBuilder();
-            do
+            try
             {
-                bytes = NetworkStream.Read(messageData, 0, messageData.Length);
-                sb.Append(Encoding.Unicode.GetString(messageData, 0, bytes));
+                do
+                {
+                    bytes = NetworkStream.Read(messageData, 0, messageData.Length);
+                    sb.Append(Encoding.Unicode.GetString(messageData, 0, bytes));
+                }
+                while (NetworkStream.DataAvailable);
+                if(bytes<=0)
+                {
+                    throw new SocketException();
+                }
             }
-            while (NetworkStream.DataAvailable);
+            catch
+            {
+                Console.WriteLine($"{UserName} conection closed");
+                server.CloseConection(Id);
+            }
+            
             return sb.ToString();
         }
         bool GetUserName()
@@ -79,14 +99,14 @@ namespace Server
 
         protected internal void Close()
         {
-            if( tcpClient != null)
-            {
-                tcpClient.Close();
-            }
-            if( NetworkStream != null)
+            if (NetworkStream != null)
             {
                 NetworkStream.Close();
             }
+            if ( tcpClient != null)
+            {
+                tcpClient.Close();
+            }            
         }
     }
 }

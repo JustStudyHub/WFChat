@@ -33,6 +33,8 @@
             this.tb_UserName = new System.Windows.Forms.TextBox();
             this.btn_JoinChat = new System.Windows.Forms.Button();
             this.btn_SendMsg = new System.Windows.Forms.Button();
+            this.tb_sendMsg = new System.Windows.Forms.TextBox();
+            this.btn_disconect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // rtb_MsgBox
@@ -77,12 +79,32 @@
             this.btn_SendMsg.TabIndex = 4;
             this.btn_SendMsg.Text = "Send";
             this.btn_SendMsg.UseVisualStyleBackColor = true;
+            this.btn_SendMsg.Click += new System.EventHandler(this.btn_SendMsg_Click);
+            // 
+            // tb_sendMsg
+            // 
+            this.tb_sendMsg.Location = new System.Drawing.Point(12, 417);
+            this.tb_sendMsg.Name = "tb_sendMsg";
+            this.tb_sendMsg.Size = new System.Drawing.Size(695, 20);
+            this.tb_sendMsg.TabIndex = 5;
+            // 
+            // btn_disconect
+            // 
+            this.btn_disconect.Location = new System.Drawing.Point(230, 30);
+            this.btn_disconect.Name = "btn_disconect";
+            this.btn_disconect.Size = new System.Drawing.Size(75, 23);
+            this.btn_disconect.TabIndex = 6;
+            this.btn_disconect.Text = "Disconect";
+            this.btn_disconect.UseVisualStyleBackColor = true;
+            this.btn_disconect.Click += new System.EventHandler(this.btn_disconect_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_disconect);
+            this.Controls.Add(this.tb_sendMsg);
             this.Controls.Add(this.btn_SendMsg);
             this.Controls.Add(this.btn_JoinChat);
             this.Controls.Add(this.tb_UserName);
@@ -90,6 +112,7 @@
             this.Controls.Add(this.rtb_MsgBox);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -102,6 +125,8 @@
         private System.Windows.Forms.TextBox tb_UserName;
         private System.Windows.Forms.Button btn_JoinChat;
         private System.Windows.Forms.Button btn_SendMsg;
+        private System.Windows.Forms.TextBox tb_sendMsg;
+        private System.Windows.Forms.Button btn_disconect;
     }
 }
 

@@ -42,18 +42,24 @@ namespace Server
         protected internal void CloseConection(string id)
         {
             Client client = clients.FirstOrDefault(c => c.Id == id);
+            if(client != null)
+            {
+                client.Close();
+                clients.Remove(client);
+            }
         }
 
         protected internal void BroadcastMessages(string message, string id)
         {
             byte[] data = Encoding.Unicode.GetBytes(message);
-            for (int i = 0; i < clients.Count; i++)
-            {
-                if (clients[i].Id != id)
+
+                for (int i = 0; i < clients.Count; i++)
                 {
-                    clients[i].NetworkStream.Write(data, 0, data.Length);
-                }
-            }
+                    if (clients[i].Id != id)
+                    {
+                        clients[i].NetworkStream.Write(data, 0, data.Length);
+                    }
+                }  
         }
 
         protected internal void StopServer()
